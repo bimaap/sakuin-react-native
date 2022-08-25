@@ -21,29 +21,31 @@ export default function Home({ navigation }){
             <View className={`h-1/6 bg-gray-100`}>
                 <View className={`bg-[#293462] px-8 flex justify-center items-center h-full rounded-b-3xl`}>
                     <View className={`w-full flex flex-row justify-between items-center`}>
-                        <View className={`flex flex-row space-x-3`}>
-                            <View className={`w-[48px] h-[48px] rounded-lg overflow-hidden`}>
-                                <ImageBackground source={default_profile} className={`w-[48px] h-[48px]`} />
+                        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                            <View className={`flex flex-row space-x-3`}>
+                                <View className={`w-[48px] h-[48px] rounded-lg overflow-hidden`}>
+                                    <ImageBackground source={default_profile} className={`w-[48px] h-[48px]`} />
+                                </View>
+                                <View>
+                                    <Text className={`text-[#DBDFFD] font-bold text-base`}>Robert Chandler</Text>
+                                    <Text className={`text-[#8289AF] font-bold text-sm`}>Rp120.000</Text>
+                                </View>
                             </View>
-                            <View>
-                                <Text className={`text-[#DBDFFD] font-bold text-base`}>Robert Chandler</Text>
-                                <Text className={`text-[#8289AF] font-bold text-sm`}>Rp120.000</Text>
-                            </View>
-                        </View>
+                        </TouchableOpacity>
                         <Icon name={'notifications-outline'} size={24} color={'white'} />
                     </View>
                 </View>
             </View>
             <ScrollView className={`bg-gray-100 w-full flex flex-col flex-1`}>
-                <View className={`flex-1 w-full p-4 flex flex-colbg-black space-y-4`}>
+                <View className={`flex-1 w-full p-4 flex flex-col space-y-4`}>
                     <View className={`flex flex-row space-x-4`}>
-                        <TouchableOpacity className={`flex flex-1`}>
+                        <TouchableOpacity className={`flex flex-1`} onPress={() => navigation.navigate('FindReceiver')}>
                             <View className={`w-full bg-[#DBDFFD] h-[48px] rounded flex items-center justify-center flex-row space-x-2`}>
                                 <Icon name={'add-outline'} size={24} color={'#293462'} />
                                 <Text className={`text-lg font-semibold text-[#293462]`}>Transfer</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity className={`flex flex-1`}>
+                        <TouchableOpacity className={`flex flex-1`} onPress={() => navigation.navigate('Topup')}>
                             <View className={`w-full bg-[#DBDFFD] h-[48px] rounded flex items-center justify-center flex-row space-x-2`}>
                                 <Icon name={'arrow-up-outline'} size={24} color={'#293462'} />
                                 <Text className={`text-lg font-semibold text-[#293462]`}>Top Up</Text>
@@ -52,7 +54,9 @@ export default function Home({ navigation }){
                     </View>
                     <View className={`flex flex-row justify-between items-center`}>
                         <Text className={`text-lg font-semibold text-gray-900`}>Transfer</Text>
-                        <Text className={`text-sm font-semibold text-[#8289AF]`}>See All</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('History')}>
+                            <Text className={`text-sm font-semibold text-[#8289AF]`}>See All</Text>
+                        </TouchableOpacity>
                     </View>
 
                     {

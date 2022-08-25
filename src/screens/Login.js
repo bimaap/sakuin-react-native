@@ -5,6 +5,7 @@ import { TailwindProvider } from "tailwindcss-react-native";
 import Input from '../components/Input';
 
 export default function Login({ navigation }){
+  const pin = false;
   return (
     <TailwindProvider>
         <View className={`bg-[#293462] w-full h-full`}>
@@ -33,10 +34,10 @@ export default function Login({ navigation }){
               </View>
 
               <View className={`flex w-full items-end`}>
-                <TouchableOpacity><Text className={`text-gray-400`}>Forgot password?</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}><Text className={`text-gray-400`}>Forgot password?</Text></TouchableOpacity>
               </View>
 
-              <TouchableOpacity className={`w-full`}>
+              <TouchableOpacity className={`w-full`} onPress={() => navigation.navigate(pin? 'Home':'CreatePin')}>
                 <View className={`w-full bg-gray-300 h-[48px] rounded flex items-center justify-center`}>
                   <Text className={`text-lg font-semibold text-gray-500`}>Login</Text>
                 </View>
@@ -44,7 +45,7 @@ export default function Login({ navigation }){
 
               <View className={`flex flex-row space-x-1`}>
                 <Text className={`text-gray-400`}>Don’t have an account? Let’s</Text>
-                <TouchableOpacity><Text className={`text-[#293462] font-semibold`}>Register</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Register')}><Text className={`text-[#293462] font-semibold`}>Register</Text></TouchableOpacity>
               </View>
             </View>
         </View>

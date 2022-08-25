@@ -20,10 +20,12 @@ export default function History({ navigation }){
         <TailwindProvider>
             <View className={`h-1/6 bg-gray-100`}>
                 <View className={`bg-[#293462] p-8 flex justify-end h-full rounded-b-3xl`}>
-                    <View className={`w-full flex flex-row items-center space-x-2`}>
-                        <Icon name={'arrow-back'} size={24} color={'white'} />
-                        <Text className={`text-[#DBDFFD] font-bold text-base`}>History</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                        <View className={`w-full flex flex-row items-center space-x-2`}>
+                            <Icon name={'arrow-back'} size={24} color={'white'} />
+                            <Text className={`text-[#DBDFFD] font-bold text-base`}>History</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
             <ScrollView className={`bg-gray-100 w-full flex flex-col flex-1`}>

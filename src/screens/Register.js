@@ -4,7 +4,7 @@ import React from 'react'
 import { TailwindProvider } from "tailwindcss-react-native";
 import Input from '../components/Input';
 
-export default function Register(){
+export default function Register({navigation}){
   return (
     <TailwindProvider>
         <View className={`bg-[#293462] w-full h-full`}>
@@ -32,7 +32,7 @@ export default function Register(){
                 />
               </View>
 
-              <TouchableOpacity className={`w-full`}>
+              <TouchableOpacity className={`w-full`} onPress={() => navigation.navigate('RegisterProfile')}>
                 <View className={`w-full bg-gray-300 h-[48px] rounded flex items-center justify-center`}>
                   <Text className={`text-lg font-semibold text-gray-500`}>Register</Text>
                 </View>
@@ -40,7 +40,7 @@ export default function Register(){
 
               <View className={`flex flex-row space-x-1`}>
                 <Text className={`text-gray-400`}>Already have an account? Let’s</Text>
-                <TouchableOpacity><Text className={`text-[#293462] font-semibold`}>Login</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}><Text className={`text-[#293462] font-semibold`}>Login</Text></TouchableOpacity>
               </View>
             </View>
         </View>
