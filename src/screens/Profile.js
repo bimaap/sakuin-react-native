@@ -37,13 +37,13 @@ export default function Profile({ navigation }){
                             <Icon name={'chevron-forward-outline'} size={18} color={'grey'} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity className={`w-full`} onPress={() => navigation.navigate('PersonalInformation')}>
+                    <TouchableOpacity className={`w-full`} onPress={() => navigation.navigate('ChangePassword')}>
                         <View className={`w-full bg-gray-300 h-[48px] rounded flex items-center justify-between flex-row px-4`}>
                             <Text className={`text-lg font-semibold text-gray-500`}>Change Password</Text>
                             <Icon name={'chevron-forward-outline'} size={18} color={'grey'} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity className={`w-full`} onPress={() => navigation.navigate('PersonalInformation')}>
+                    <TouchableOpacity className={`w-full`} onPress={() => navigation.navigate('ChangePin')}>
                         <View className={`w-full bg-gray-300 h-[48px] rounded flex items-center justify-between flex-row px-4`}>
                             <Text className={`text-lg font-semibold text-gray-500`}>Change PIN</Text>
                             <Icon name={'chevron-forward-outline'} size={18} color={'grey'} />
@@ -56,7 +56,6 @@ export default function Profile({ navigation }){
                     </TouchableOpacity>
                 </View>
             </View>
-            <Menu />
         </TailwindProvider>
     )
 }

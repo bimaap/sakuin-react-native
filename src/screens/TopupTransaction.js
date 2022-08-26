@@ -50,7 +50,6 @@ export default function TopupTransaction({ navigation }){
                     </View>
                 </TouchableOpacity>
             </View>
-            <Menu />
         </TailwindProvider>
     )
 }

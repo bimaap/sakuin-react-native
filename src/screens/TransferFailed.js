@@ -70,7 +70,6 @@ export default function TransferFailed({ navigation }){
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            <Menu />
         </TailwindProvider>
     )
 }

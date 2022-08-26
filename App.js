@@ -22,6 +22,10 @@ import Profile from './src/screens/Profile';
 import PersonalInformation from './src/screens/PersonalInformation';
 import PhoneManage from './src/screens/PhoneManage';
 import PhoneAdd from './src/screens/PhoneAdd';
+import ChangePassword from './src/screens/ChangePassword';
+import ChangePin from './src/screens/ChangePin';
+import ChangePinConfirm from './src/screens/ChangePinConfirm';
+import Notification from './src/screens/Notification';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -62,6 +66,10 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="PersonalInformation" component={PersonalInformation} />
         <Stack.Screen options={{headerShown: false}} name="PhoneManage" component={PhoneManage} />
         <Stack.Screen options={{headerShown: false}} name="PhoneAdd" component={PhoneAdd} />
+        <Stack.Screen options={{headerShown: false}} name="ChangePassword" component={ChangePassword} />
+        <Stack.Screen options={{headerShown: false}} name="ChangePin" component={ChangePin} />
+        <Stack.Screen options={{headerShown: false}} name="ChangePinConfirm" component={ChangePinConfirm} />
+        <Stack.Screen options={{headerShown: false}} name="Notification" component={Notification} />
       </Stack.Navigator>
     </NavigationContainer>
   );

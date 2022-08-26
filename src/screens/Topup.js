@@ -71,7 +71,6 @@ export default function Topup({ navigation }){
                     </View>
                 </View>
             </ScrollView>
-            <Menu />
         </TailwindProvider>
     )
 }

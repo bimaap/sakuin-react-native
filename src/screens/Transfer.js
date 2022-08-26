@@ -57,7 +57,6 @@ export default function Transfer({ navigation }){
                     </View>
                 </TouchableOpacity>
             </View>
-            <Menu />
         </TailwindProvider>
     )
 }

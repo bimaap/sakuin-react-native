@@ -46,7 +46,6 @@ export default function PersonalInformation({ navigation }){
                     </TouchableOpacity>
                 </View>
             </View>
-            <Menu />
         </TailwindProvider>
     )
 }

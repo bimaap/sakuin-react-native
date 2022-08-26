@@ -37,7 +37,6 @@ export default function PhoneAdd({ navigation }){
                     </View>
                 </TouchableOpacity>
             </View>
-            <Menu />
         </TailwindProvider>
     )
 }

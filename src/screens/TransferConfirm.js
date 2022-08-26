@@ -65,7 +65,6 @@ export default function TransferConfirm({ navigation }){
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            <Menu />
         </TailwindProvider>
     )
 }

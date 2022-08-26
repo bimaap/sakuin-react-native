@@ -32,7 +32,9 @@ export default function Home({ navigation }){
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <Icon name={'notifications-outline'} size={24} color={'white'} />
+                        <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
+                            <Icon name={'notifications-outline'} size={24} color={'white'} />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -79,7 +81,6 @@ export default function Home({ navigation }){
                     )}
                 </View>
             </ScrollView>
-            <Menu />
         </TailwindProvider>
     )
 }

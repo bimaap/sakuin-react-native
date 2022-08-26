@@ -71,7 +71,6 @@ export default function History({ navigation }){
                     </View>
                 </TouchableOpacity>
             </View>
-            <Menu />
         </TailwindProvider>
     )
 }

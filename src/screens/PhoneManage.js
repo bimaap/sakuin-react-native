@@ -34,7 +34,6 @@ export default function PhoneManage({ navigation }){
                     </TouchableOpacity>
                 </View>
             </View>
-            <Menu />
         </TailwindProvider>
     )
 }

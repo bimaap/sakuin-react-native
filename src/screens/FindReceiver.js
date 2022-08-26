@@ -79,7 +79,6 @@ export default function FindReceiver({ navigation }){
                     </TouchableOpacity>
                 </View>
             </View>
-            <Menu />
         </TailwindProvider>
     )
 }
