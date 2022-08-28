@@ -30,6 +30,9 @@ import Notification from './src/screens/Notification';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { Provider } from "react-redux";
+import { store } from "./src/redux/store";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -38,39 +41,41 @@ export default function App() {
   const COLOR_MIDDLE = '#8289AF'
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen options={{headerShown: false}} name="Login" component={Login} />
-        <Stack.Screen options={{headerShown: false}} name="CreatePin" component={CreatePin} />
-        <Stack.Screen options={{headerShown: false}} name="PinSuccess" component={PinSuccess} />
-        <Stack.Screen options={{headerShown: false}} name="ForgotPassword" component={ForgotPassword} />
-        <Stack.Screen options={{headerShown: false}} name="ForgotPasswordConfirm" component={ForgotPasswordConfirm} />
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen options={{headerShown: false}} name="Login" component={Login} />
+          <Stack.Screen options={{headerShown: false}} name="CreatePin" component={CreatePin} />
+          <Stack.Screen options={{headerShown: false}} name="PinSuccess" component={PinSuccess} />
+          <Stack.Screen options={{headerShown: false}} name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen options={{headerShown: false}} name="ForgotPasswordConfirm" component={ForgotPasswordConfirm} />
 
-        <Stack.Screen options={{headerShown: false}} name="Register" component={Register} />
-        <Stack.Screen options={{headerShown: false}} name="RegisterProfile" component={RegisterProfile} />
-        <Stack.Screen options={{headerShown: false}} name="RegisterSuccess" component={RegisterSuccess} />
+          <Stack.Screen options={{headerShown: false}} name="Register" component={Register} />
+          <Stack.Screen options={{headerShown: false}} name="RegisterProfile" component={RegisterProfile} />
+          <Stack.Screen options={{headerShown: false}} name="RegisterSuccess" component={RegisterSuccess} />
 
-        <Stack.Screen options={{headerShown: false}} name="Home" component={Home} />
-        <Stack.Screen options={{headerShown: false}} name="History" component={History} />
-        <Stack.Screen options={{headerShown: false}} name="FindReceiver" component={FindReceiver} />
-        <Stack.Screen options={{headerShown: false}} name="Transfer" component={Transfer} />
-        <Stack.Screen options={{headerShown: false}} name="TransferConfirm" component={TransferConfirm} />
-        <Stack.Screen options={{headerShown: false}} name="TransferPin" component={TransferPin} />
-        <Stack.Screen options={{headerShown: false}} name="TransferSuccess" component={TransferSuccess} />
-        <Stack.Screen options={{headerShown: false}} name="TransferFailed" component={TransferFailed} />
+          <Stack.Screen options={{headerShown: false}} name="Home" component={Home} />
+          <Stack.Screen options={{headerShown: false}} name="History" component={History} />
+          <Stack.Screen options={{headerShown: false}} name="FindReceiver" component={FindReceiver} />
+          <Stack.Screen options={{headerShown: false}} name="Transfer" component={Transfer} />
+          <Stack.Screen options={{headerShown: false}} name="TransferConfirm" component={TransferConfirm} />
+          <Stack.Screen options={{headerShown: false}} name="TransferPin" component={TransferPin} />
+          <Stack.Screen options={{headerShown: false}} name="TransferSuccess" component={TransferSuccess} />
+          <Stack.Screen options={{headerShown: false}} name="TransferFailed" component={TransferFailed} />
 
-        <Stack.Screen options={{headerShown: false}} name="Topup" component={Topup} />
-        <Stack.Screen options={{headerShown: false}} name="TopupTransaction" component={TopupTransaction} />
+          <Stack.Screen options={{headerShown: false}} name="Topup" component={Topup} />
+          <Stack.Screen options={{headerShown: false}} name="TopupTransaction" component={TopupTransaction} />
 
-        <Stack.Screen options={{headerShown: false}} name="Profile" component={Profile} />
-        <Stack.Screen options={{headerShown: false}} name="PersonalInformation" component={PersonalInformation} />
-        <Stack.Screen options={{headerShown: false}} name="PhoneManage" component={PhoneManage} />
-        <Stack.Screen options={{headerShown: false}} name="PhoneAdd" component={PhoneAdd} />
-        <Stack.Screen options={{headerShown: false}} name="ChangePassword" component={ChangePassword} />
-        <Stack.Screen options={{headerShown: false}} name="ChangePin" component={ChangePin} />
-        <Stack.Screen options={{headerShown: false}} name="ChangePinConfirm" component={ChangePinConfirm} />
-        <Stack.Screen options={{headerShown: false}} name="Notification" component={Notification} />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen options={{headerShown: false}} name="Profile" component={Profile} />
+          <Stack.Screen options={{headerShown: false}} name="PersonalInformation" component={PersonalInformation} />
+          <Stack.Screen options={{headerShown: false}} name="PhoneManage" component={PhoneManage} />
+          <Stack.Screen options={{headerShown: false}} name="PhoneAdd" component={PhoneAdd} />
+          <Stack.Screen options={{headerShown: false}} name="ChangePassword" component={ChangePassword} />
+          <Stack.Screen options={{headerShown: false}} name="ChangePin" component={ChangePin} />
+          <Stack.Screen options={{headerShown: false}} name="ChangePinConfirm" component={ChangePinConfirm} />
+          <Stack.Screen options={{headerShown: false}} name="Notification" component={Notification} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }

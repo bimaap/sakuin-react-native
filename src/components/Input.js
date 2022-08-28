@@ -3,7 +3,7 @@ import React from 'react'
 import { TailwindProvider } from "tailwindcss-react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function Input({placeholder, icon, secretInput, type, focus}){
+export default function Input({placeholder, icon, secretInput, type, focus, onChange}){
     const [secret, setSecret] = React.useState(secretInput? true:false);
     return(
         <TailwindProvider>
@@ -14,7 +14,7 @@ export default function Input({placeholder, icon, secretInput, type, focus}){
                     <Icon name={icon[0]} size={24} color={'gray'} />
                     </View>
                 }
-                <TextInput placeholder={placeholder} placeholderTextColor="gray" keyboardType={type} maxLength={type == 'numeric'? 1:null} secureTextEntry={secret} autoFocus = {focus} className={`text-gray-900 ${type == 'numeric'&&'text-center'} flex flex-1 px-3 text-base`} />
+                <TextInput onChangeText={onChange} placeholder={placeholder} placeholderTextColor="gray" keyboardType={type} maxLength={type == 'numeric'? 1:null} secureTextEntry={secret} autoFocus = {focus} className={`text-gray-900 ${type == 'numeric'&&'text-center'} flex flex-1 px-3 text-base`} />
                 {
                     secretInput &&
                     <TouchableOpacity  onPress={() => setSecret(!secret)}>
