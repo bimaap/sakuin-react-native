@@ -5,17 +5,13 @@ import { TailwindProvider } from "tailwindcss-react-native";
 import Input from '../components/Input';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import qs from 'qs';
-import http from "../helpers/http";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../redux/asyncActions/auth";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Register({navigation}){
   const dispatch = useDispatch();
   const [loading, setLoading] = React.useState(false);
   const [checkError, setCheckError] = React.useState(null)
-  const [token, setToken] = React.useState();
   const error = useSelector((state) => state.auth.error)
   const message = useSelector((state) => state.auth.message)
 
@@ -29,6 +25,10 @@ export default function Register({navigation}){
       if(!Object.keys(props.errors).length){
         dispatch(register(props.values));
         setLoading(true)
+        setTimeout(function () {
+          setLoading(false)
+          navigation.navigate('RegisterSuccess')
+        }, 1000);
       }
     }else{
       setCheckError('Data register cant empty')
@@ -36,13 +36,9 @@ export default function Register({navigation}){
         setCheckError(null)
       }, 2000);
     }
-    // navigation.navigate('RegisterProfile')
   }
 
   React.useEffect(() => {
-    AsyncStorage.getItem('token').then((value)=>{
-      setToken(value)
-    })
     if(error){
       setCheckError(error)
       setTimeout(function () {
@@ -54,7 +50,7 @@ export default function Register({navigation}){
         setLoading(false)
       }, 1000);
     }
-  }, [error, message, token]);
+  }, [error, message]);
 
   return (
     <TailwindProvider>

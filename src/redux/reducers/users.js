@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getUsersData, getUserDataById, getUserPin, patchUserPin } from "../asyncActions/users";
+import { getUsersData, getUserDataById, getUserPin, patchUserPin, patchUserImage, patchUserFullname } from "../asyncActions/users";
 
 const initialState = {
   data: null,
@@ -74,8 +74,34 @@ const users = createSlice({
           state.error = action.payload.error;
         }
     });
+
+    build.addCase(patchUserImage.pending, (state) => {
+      state.message = null
+      state.error = null
+    });
+    build.addCase(patchUserImage.fulfilled, (state, action) => {
+        const error = action.payload.error;
+        if (!error) {
+            state.message = action.payload.message;
+        } else {
+          state.error = action.payload.error;
+        }
+    });
+
+    build.addCase(patchUserFullname.pending, (state) => {
+      state.message = null
+      state.error = null
+    });
+    build.addCase(patchUserFullname.fulfilled, (state, action) => {
+        const error = action.payload.error;
+        if (!error) {
+            state.message = action.payload.message;
+        } else {
+          state.error = action.payload.error;
+        }
+    });
   }
 });
 
-export { getUsersData, getUserDataById, getUserPin, patchUserPin };
+export { getUsersData, getUserDataById, getUserPin, patchUserPin, patchUserImage, patchUserFullname };
 export default users.reducer;

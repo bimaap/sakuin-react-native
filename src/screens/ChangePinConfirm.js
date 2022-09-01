@@ -1,5 +1,5 @@
 
-import { View, Text, TextInput, TouchableOpacity, ImageBackground, ScrollView } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ImageBackground, ScrollView, ActivityIndicator } from 'react-native'
 import React from 'react'
 import { TailwindProvider } from "tailwindcss-react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -62,6 +62,7 @@ export default function ChangePinConfirm({ navigation }){
                         />
                     </View>
                 </View>
+                
                 <TouchableOpacity className={`w-full`} onPress={() => navigation.navigate('Profile')}>
                     <View className={`w-full bg-gray-300 h-[48px] rounded flex items-center justify-center px-4`}>
                         <Text className={`text-lg font-semibold text-gray-500`}>Submit</Text>

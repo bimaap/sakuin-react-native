@@ -2,13 +2,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import qs from "qs";
 import http from "../../helpers/http";
 
-export const getUsersData = createAsyncThunk("getAll/users", async (token) => {
+export const getUsersData = createAsyncThunk("getAll/users", async ([token, cb, page = 1, search = '', limit = 10]) => {
   const result = {};
   try {
-    const { data } = await http(token).get("http://192.168.100.148:8000/users/");
+    const { data } = await http(token).get(`http://192.168.100.148:8000/users?page=${page}&limit=${limit}&search=${search}`);
 
     result.message = data.message;
     result.data = data.results;
+    cb(data)
     return result;
   } catch (e) {
     result.error = e.response.data.message;
@@ -16,14 +17,13 @@ export const getUsersData = createAsyncThunk("getAll/users", async (token) => {
   }
 });
 
-export const getUserDataById = createAsyncThunk("getUser/users", async (request) => {
-    const token = request.token
-    const id = request.id
+export const getUserDataById = createAsyncThunk("getUser/users", async ([token, cb, id = '']) => {
     const result = {};
     try {
         const { data } = await http(token).get(`http://192.168.100.148:8000/users/${id? id: ':id'}`);
         result.data = data.results;
         result.message = data.message;
+        cb(data.results)
         return result;
     } catch (e) {
         result.error = e.response.data.message;
@@ -50,6 +50,51 @@ export const patchUserPin = createAsyncThunk("patchUserPin/users", async ([token
     try {
         const send = qs.stringify({pin});
         const { data } = await http(token).patch("http://192.168.100.148:8000/users/patch/pin", send, {
+            headers: {
+                "content-type": "application/x-www-form-urlencoded"
+            }
+        });
+        result.message = data.message;
+        return result;
+    } catch (e) {
+        result.error = e.response.data.message;
+        return result;
+    }
+});
+
+export const patchUserImage = createAsyncThunk("patchUserImage/users", async ([token, image]) => {
+    const result = {};
+
+    
+    try {
+        const imageData = new FormData();
+        
+        imageData.append("image", {
+          uri: image[0].uri,
+          name: image[0].fileName,
+          type: image[0].type
+        })
+
+        const { data } = await http(token).patch("http://192.168.100.148:8000/users/patch/image", imageData, {
+            headers: {
+                Accept: 'application/json',
+                'content-type': 'multipart/form-data'
+            }
+        });
+        
+        result.message = data.message;
+        return result;
+    } catch (e) {
+        result.error = e.response.data.message;
+        return result;
+    }
+});
+
+export const patchUserFullname = createAsyncThunk("patchUserFullname/users", async ([token, name]) => {
+    const result = {};
+    try {
+        const send = qs.stringify(name);
+        const { data } = await http(token).patch("http://192.168.100.148:8000/users/patch/name", send, {
             headers: {
                 "content-type": "application/x-www-form-urlencoded"
             }

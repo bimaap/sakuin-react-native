@@ -7,6 +7,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/asyncActions/auth";
+import { clearAuth } from '../redux/reducers/auth';
 import { getUserPin } from '../redux/asyncActions/users';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import decode from "jwt-decode";
@@ -55,11 +56,12 @@ export default function Login({ navigation }){
         setLoading(false)
       }, 1000);
     }
+
     if (token) {
       AsyncStorage.setItem('token', token)
-
       dispatch(getUserPin([token, (pin)=>{
-        navigation.navigate(pin? 'Home':'CreatePin')
+        dispatch(clearAuth());
+        navigation.navigate(pin != 0 && pin !== null? 'Home':'CreateProfile')
       }]));
 
       setTimeout(function () {

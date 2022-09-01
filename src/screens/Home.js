@@ -4,9 +4,16 @@ import React from 'react'
 import { TailwindProvider } from "tailwindcss-react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import default_profile from '../assets/images/default.jpg'
-import Menu from '../components/Menu';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDataById } from '../redux/asyncActions/users';
 
 export default function Home({ navigation }){
+    const [token, setToken] = React.useState();
+    const dispatch = useDispatch();
+    const [dataUser, setData] = React.useState({})
+    const imageUrl = { uri: `https://res.cloudinary.com/sakuin/image/upload/v1661873432/sakuin/${dataUser?.image}` };
+
     const data = [
         {name: 'Bima', process: 'Transfer', amount: 340000},
         {name: 'Dimas', process: 'Topup', amount: 50000},
@@ -16,6 +23,16 @@ export default function Home({ navigation }){
         {name: 'Kobo', process: 'Pending', amount: 150000},
     ]
 
+    React.useEffect(() => {
+        AsyncStorage.getItem('token').then((value)=>{
+            setToken(value)
+        })
+
+        if(token){
+            dispatch(getUserDataById([token, (e)=>setData(e)]))
+        }
+    }, [token]);
+
     return (
         <TailwindProvider>
             <View className={`h-1/6 bg-gray-100`}>
@@ -24,11 +41,11 @@ export default function Home({ navigation }){
                         <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
                             <View className={`flex flex-row space-x-3`}>
                                 <View className={`w-[48px] h-[48px] rounded-lg overflow-hidden`}>
-                                    <ImageBackground source={default_profile} className={`w-[48px] h-[48px]`} />
+                                    <ImageBackground source={dataUser?.image? imageUrl:default_profile} className={`w-[48px] h-[48px]`} />
                                 </View>
                                 <View>
-                                    <Text className={`text-[#DBDFFD] font-bold text-base`}>Robert Chandler</Text>
-                                    <Text className={`text-[#8289AF] font-bold text-sm`}>Rp120.000</Text>
+                                    <Text className={`text-[#DBDFFD] font-bold text-base`}>{dataUser?.first_name} {dataUser?.last_name}</Text>
+                                    <Text className={`text-[#8289AF] font-bold text-sm`}>Rp.{dataUser?.balance}</Text>
                                 </View>
                             </View>
                         </TouchableOpacity>
