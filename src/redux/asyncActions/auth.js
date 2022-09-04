@@ -6,7 +6,7 @@ export const login = createAsyncThunk("auth/login", async (request) => {
   const result = {};
   try {
     const send = qs.stringify(request);
-    const { data } = await http().post("http://192.168.100.148:8000/auth/login", send, {
+    const { data } = await http().post("https://sakuin-backend.vercel.app/auth/login", send, {
         headers: {
           "content-type": "application/x-www-form-urlencoded"
         }
@@ -25,7 +25,7 @@ export const register = createAsyncThunk("auth/register", async (request) => {
   const result = {};
   try {
     const send = qs.stringify(request);
-    const { data } = await http().post("http://192.168.100.148:8000/auth/register", send, {
+    const { data } = await http().post("https://sakuin-backend.vercel.app/auth/register", send, {
       headers: {
         "content-type": "application/x-www-form-urlencoded"
       }

@@ -5,7 +5,7 @@ import http from "../../helpers/http";
 export const getUsersData = createAsyncThunk("getAll/users", async ([token, cb, page = 1, search = '', limit = 10]) => {
   const result = {};
   try {
-    const { data } = await http(token).get(`http://192.168.100.148:8000/users?page=${page}&limit=${limit}&search=${search}`);
+    const { data } = await http(token).get(`https://sakuin-backend.vercel.app/users?page=${page}&limit=${limit}&search=${search}`);
 
     result.message = data.message;
     result.data = data.results;
@@ -20,7 +20,7 @@ export const getUsersData = createAsyncThunk("getAll/users", async ([token, cb, 
 export const getUserDataById = createAsyncThunk("getUser/users", async ([token, cb, id = '']) => {
     const result = {};
     try {
-        const { data } = await http(token).get(`http://192.168.100.148:8000/users/${id? id: ':id'}`);
+        const { data } = await http(token).get(`https://sakuin-backend.vercel.app/users/${id? id: ':id'}`);
         result.data = data.results;
         result.message = data.message;
         cb(data.results)
@@ -34,7 +34,7 @@ export const getUserDataById = createAsyncThunk("getUser/users", async ([token, 
 export const getUserPin = createAsyncThunk("getUserPin/users", async ([token, cb]) => {
     const result = {};
     try {
-        const { data } = await http(token).get('http://192.168.100.148:8000/users/check/pin');
+        const { data } = await http(token).get('https://sakuin-backend.vercel.app/users/check/pin');
         result.data = data.results.pin;
         result.message = data.message;
         cb(data.results.pin)
@@ -49,7 +49,7 @@ export const patchUserPin = createAsyncThunk("patchUserPin/users", async ([token
     const result = {};
     try {
         const send = qs.stringify({pin});
-        const { data } = await http(token).patch("http://192.168.100.148:8000/users/patch/pin", send, {
+        const { data } = await http(token).patch("https://sakuin-backend.vercel.app/users/patch/pin", send, {
             headers: {
                 "content-type": "application/x-www-form-urlencoded"
             }
@@ -75,7 +75,7 @@ export const patchUserImage = createAsyncThunk("patchUserImage/users", async ([t
           type: image[0].type
         })
 
-        const { data } = await http(token).patch("http://192.168.100.148:8000/users/patch/image", imageData, {
+        const { data } = await http(token).patch("https://sakuin-backend.vercel.app/users/patch/image", imageData, {
             headers: {
                 Accept: 'application/json',
                 'content-type': 'multipart/form-data'
@@ -94,7 +94,7 @@ export const patchUserFullname = createAsyncThunk("patchUserFullname/users", asy
     const result = {};
     try {
         const send = qs.stringify(name);
-        const { data } = await http(token).patch("http://192.168.100.148:8000/users/patch/name", send, {
+        const { data } = await http(token).patch("https://sakuin-backend.vercel.app/users/patch/name", send, {
             headers: {
                 "content-type": "application/x-www-form-urlencoded"
             }

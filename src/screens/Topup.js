@@ -6,7 +6,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import default_profile from '../assets/images/default.jpg'
 import Menu from '../components/Menu';
 
-export default function Topup({ navigation }){
+export default function Topup({ route, navigation }){
+    // console.log(route.params.dataUser);
     return (
         <TailwindProvider>
             <View className={`h-1/6 bg-gray-100`}>
@@ -21,7 +22,7 @@ export default function Topup({ navigation }){
             </View>
             <View className={`bg-gray-100 w-full flex flex-col p-4`}>
                 <View className={`w-full bg-[#DBDFFD] p-2 space-x-2 flex flex-row rounded-lg`}>
-                    <TouchableOpacity onPress={() => navigation.navigate('TopupTransaction')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('TopupTransaction', {data: route.params.dataUser})}>
                         <View className={`w-[48px] h-[48px] rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center`}>
                             <Icon name={'add-outline'} size={30} color={'#293462'} />
                         </View>

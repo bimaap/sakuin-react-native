@@ -5,8 +5,16 @@ import { TailwindProvider } from "tailwindcss-react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import default_profile from '../assets/images/default.jpg'
 import Menu from '../components/Menu';
+import { logout } from '../redux/reducers/auth';
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Profile({ navigation }){
+    const dispatch = useDispatch();
+    const onLogout = () => {
+        dispatch(logout());
+        navigation.navigate('Login')
+    };
+    
     return (
         <TailwindProvider>
             <View className={`h-1/6 bg-gray-100`}>
@@ -49,7 +57,7 @@ export default function Profile({ navigation }){
                             <Icon name={'chevron-forward-outline'} size={18} color={'grey'} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity className={`w-full`} onPress={() => navigation.navigate('PersonalInformation')}>
+                    <TouchableOpacity className={`w-full`} onPress={() => onLogout()}>
                         <View className={`w-full bg-gray-300 h-[48px] rounded flex justify-center  px-4`}>
                             <Text className={`text-lg font-semibold text-gray-500`}>Logout</Text>
                         </View>

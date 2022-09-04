@@ -8,10 +8,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDataById } from '../redux/asyncActions/users';
 
-export default function Home({ navigation }){
-    const [token, setToken] = React.useState();
+export default function Home({ route, navigation }){
+    // const [token, setToken] = React.useState();
     const dispatch = useDispatch();
-    const [dataUser, setData] = React.useState({})
+    const [dataUser, setData] = React.useState(route.params? route.params:{})
+    const token = useSelector((state) => state.auth.token)
     const imageUrl = { uri: `https://res.cloudinary.com/sakuin/image/upload/v1661873432/sakuin/${dataUser?.image}` };
 
     const data = [
@@ -24,14 +25,11 @@ export default function Home({ navigation }){
     ]
 
     React.useEffect(() => {
-        AsyncStorage.getItem('token').then((value)=>{
-            setToken(value)
-        })
-
         if(token){
             dispatch(getUserDataById([token, (e)=>setData(e)]))
         }
-    }, [token]);
+        route.params && setData(route.params)
+    }, [token, route.params]);
 
     return (
         <TailwindProvider>
@@ -64,7 +62,7 @@ export default function Home({ navigation }){
                                 <Text className={`text-lg font-semibold text-[#293462]`}>Transfer</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity className={`flex flex-1`} onPress={() => navigation.navigate('Topup')}>
+                        <TouchableOpacity className={`flex flex-1`} onPress={() => navigation.navigate('Topup', {dataUser})}>
                             <View className={`w-full bg-[#DBDFFD] h-[48px] rounded flex items-center justify-center flex-row space-x-2`}>
                                 <Icon name={'arrow-up-outline'} size={24} color={'#293462'} />
                                 <Text className={`text-lg font-semibold text-[#293462]`}>Top Up</Text>

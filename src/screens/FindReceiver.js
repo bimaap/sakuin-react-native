@@ -75,11 +75,11 @@ export default function FindReceiver({ navigation }){
                         data?.map((e, index) => {
                             return (
                                 <View key={index.toString()} >
-                                    <TouchableOpacity onPress={() => navigation.navigate('Transfer')} >
+                                    <TouchableOpacity onPress={() => navigation.navigate('Transfer', {id: e.id})} >
                                         <View key={index} className={`w-full bg-[#DBDFFD] p-2 flex flex-row justify-between items-center rounded-lg`}>
                                             <View className={`flex flex-row space-x-3`}>
                                                 <View className={`w-[48px] h-[48px] rounded-lg overflow-hidden`}>
-                                                    <ImageBackground source={default_profile} className={`w-[48px] h-[48px]`} />
+                                                    <ImageBackground source={e.image? { uri: `https://res.cloudinary.com/sakuin/image/upload/v1661873432/sakuin/${e.image}` } : default_profile} className={`w-[48px] h-[48px]`} />
                                                 </View>
                                                 <View>
                                                     <Text className={`text-[#293462] font-bold text-base`}>{e.first_name} {e.last_name}</Text>
