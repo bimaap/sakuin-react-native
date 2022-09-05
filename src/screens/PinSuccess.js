@@ -3,16 +3,22 @@ import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'reac
 import React from 'react'
 import { TailwindProvider } from "tailwindcss-react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
+import { getUserDataById } from '../redux/asyncActions/users';
+import { useDispatch, useSelector } from "react-redux";
 
 export default function PinSuccess({ navigation }){
     const [loading, setLoading] = React.useState(false);
+    const token = useSelector((state) => state.auth.token)
+    const dispatch = useDispatch();
 
     const pinSubmit = () => {
         setLoading(true)
-        setTimeout(function () {
-            setLoading(false)
-            navigation.navigate('Home')
-        }, 1000);
+        dispatch(getUserDataById([token, (e)=>{
+            setTimeout(function () {
+                setLoading(false)
+                navigation.navigate('Home', e)
+            }, 1500);
+        }]))
     }
 
     return (

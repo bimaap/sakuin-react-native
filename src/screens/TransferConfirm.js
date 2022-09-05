@@ -12,14 +12,16 @@ export default function TransferConfirm({route, navigation }){
     const dispatch = useDispatch();
     const [loading, setLoading] = React.useState(false);
     const [checkError, setCheckError] = React.useState(null)
-    const [dataUser, setData] = React.useState({})
+    const [dataReceiver, setDataReceiver] = React.useState({})
+    const [dataSender, setDataSender] = React.useState({})
     const token = useSelector((state) => state.auth.token)
     const date = timeConverter(Date.now())
 
     React.useEffect(() => {
         if(route.params.id){
-            dispatch(getUserDataById([token, (e)=>setData(e), route.params.id]))
+            dispatch(getUserDataById([token, (e)=>setDataReceiver(e), route.params.id]))
         }
+        dispatch(getUserDataById([token, (e)=>setDataSender(e)]))
     }, [token, route.params]);
 
     function timeConverter(UNIX_timestamp){
@@ -28,6 +30,14 @@ export default function TransferConfirm({route, navigation }){
         const time = dateTime[1].split(':')
         const month = [null, 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
         return {year: date[0], month: month[Number(date[1].split('')[1])], day: date[2], hour: Number(time[0])+7 >= 24? (Number(time[0])+7)-24:Number(time[0])+7, minute: time[1]}
+    }
+
+    const transferSubmit = () => {
+        setLoading(true)
+        setTimeout(function () {
+            setLoading(false)
+            navigation.navigate('TransferPin', {recivier_id: route.params.id, props: route.params.props})
+        }, 1000);
     }
 
     return (
@@ -51,11 +61,11 @@ export default function TransferConfirm({route, navigation }){
                     <View className={`w-full bg-[#DBDFFD] p-2 flex flex-row justify-between items-center rounded-lg`}>
                         <View className={`flex flex-row space-x-3`}>
                             <View className={`w-[48px] h-[48px] rounded-lg overflow-hidden`}>
-                                <ImageBackground source={dataUser.image? { uri: `https://res.cloudinary.com/sakuin/image/upload/v1661873432/sakuin/${dataUser.image}` } : default_profile} className={`w-[48px] h-[48px]`} />
+                                <ImageBackground source={dataReceiver.image? { uri: `https://res.cloudinary.com/sakuin/image/upload/v1661873432/sakuin/${dataReceiver.image}` } : default_profile} className={`w-[48px] h-[48px]`} />
                             </View>
                             <View>
-                                <Text className={`text-[#293462] font-bold text-base`}>{dataUser.first_name} {dataUser.last_name}</Text>
-                                <Text className={`text-[#8289AF] font-bold text-sm`}>{dataUser.phone_number}</Text>
+                                <Text className={`text-[#293462] font-bold text-base`}>{dataReceiver.first_name} {dataReceiver.last_name}</Text>
+                                <Text className={`text-[#8289AF] font-bold text-sm`}>{dataReceiver.phone_number}</Text>
                             </View>
                         </View>
                     </View>
@@ -70,7 +80,7 @@ export default function TransferConfirm({route, navigation }){
                     </View>
                     <View className={`w-full bg-[#DBDFFD] px-4 py-2 flex flex-col rounded-lg`}>
                         <Text className={`text-[#8289AF] font-bold text-sm`}>Balance Left</Text>
-                        <Text className={`text-[#293462] font-bold text-base`}>Rp20.000</Text>
+                        <Text className={`text-[#293462] font-bold text-base`}>Rp{dataSender.balance && parseInt(dataSender.balance)-parseInt(route.params.props.amount)}</Text>
                     </View>
                     <View className={`w-full bg-[#DBDFFD] px-4 py-2 flex flex-col rounded-lg`}>
                         <Text className={`text-[#8289AF] font-bold text-sm`}>Date & Time</Text>
@@ -81,11 +91,18 @@ export default function TransferConfirm({route, navigation }){
                         <Text className={`text-[#293462] font-bold text-base`}>{route.params.props.notes}</Text>
                     </View>
 
-                    <TouchableOpacity className={`w-full`} onPress={() => navigation.navigate('TransferPin')}>
-                        <View className={`w-full bg-gray-300 h-[48px] rounded flex items-center justify-center`}>
-                            <Text className={`text-lg font-semibold text-gray-500`}>Continue</Text>
+                    {
+                        loading?
+                        <View className={`w-full h-[48px] rounded flex items-center justify-center`}>
+                            <ActivityIndicator size="large" color="gray" />
                         </View>
-                    </TouchableOpacity>
+                        :
+                        <TouchableOpacity className={`w-full`} onPress={() => transferSubmit()}>
+                            <View className={`w-full bg-gray-300 h-[48px] rounded flex items-center justify-center`}>
+                                <Text className={`text-lg font-semibold text-gray-500`}>Continue</Text>
+                            </View>
+                        </TouchableOpacity>
+                    }
                 </View>
             </ScrollView>
         </TailwindProvider>

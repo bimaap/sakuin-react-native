@@ -7,14 +7,21 @@ import default_profile from '../assets/images/default.jpg'
 import Input from '../components/Input';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { postTransfer } from '../redux/asyncActions/transactions';
+import { postTopup } from '../redux/asyncActions/transactions';
 import { useDispatch, useSelector } from "react-redux";
+import { getUserDataById } from '../redux/asyncActions/users';
 
 export default function TopupTransaction({ route, navigation }){
     const dispatch = useDispatch();
     const [loading, setLoading] = React.useState(false);
     const [checkError, setCheckError] = React.useState(null)
     const token = useSelector(state => state.auth.token);
+    const [dataUser, setData] = React.useState(route.params? route.params:{})
+    const imageUrl = { uri: `https://res.cloudinary.com/sakuin/image/upload/v1661873432/sakuin/${dataUser?.image}` };
+
+    React.useEffect(() => {
+        dispatch(getUserDataById([token, (e)=>setData(e)]))
+    }, [token]);
 
     const topupSchema = Yup.object().shape({
         amount: Yup.string().required('Required')
@@ -23,7 +30,7 @@ export default function TopupTransaction({ route, navigation }){
     const topupSubmit = (props) => {
         if(props.values.amount){
             if(!Object.keys(props.errors).length){
-                dispatch(postTransfer([token, props.values.amount]));
+                dispatch(postTopup([token, props.values.amount]));
                 setLoading(true)
                 setTimeout(function () {
                     setLoading(false)
@@ -54,11 +61,12 @@ export default function TopupTransaction({ route, navigation }){
                 <View className={`w-full bg-[#DBDFFD] p-2 flex flex-row justify-between items-center rounded-lg`}>
                     <View className={`flex flex-row space-x-3`}>
                         <View className={`w-[48px] h-[48px] rounded-lg overflow-hidden`}>
-                            <ImageBackground source={default_profile} className={`w-[48px] h-[48px]`} />
+                            {/* <ImageBackground source={default_profile} className={`w-[48px] h-[48px]`} /> */}
+                            <ImageBackground source={dataUser?.image? imageUrl:default_profile} className={`w-[48px] h-[48px]`} />
                         </View>
                         <View>
-                            <Text className={`text-[#293462] font-bold text-base`}>{route.params.data.first_name} {route.params.data.last_name}</Text>
-                            <Text className={`text-[#8289AF] font-bold text-sm`}>{route.params.data.phone_number}</Text>
+                            <Text className={`text-[#293462] font-bold text-base`}>{dataUser.first_name} {dataUser.last_name}</Text>
+                            <Text className={`text-[#8289AF] font-bold text-sm`}>{dataUser.phone_number}</Text>
                         </View>
                     </View>
                 </View>

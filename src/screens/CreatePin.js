@@ -13,13 +13,13 @@ export default function CreatePin({ navigation }){
     const dispatch = useDispatch();
     const [loading, setLoading] = React.useState(false);
     const [checkError, setCheckError] = React.useState(null)
-    const [token, setToken] = React.useState();
+    const token = useSelector((state) => state.auth.token)
 
-    React.useEffect(() => {
-        AsyncStorage.getItem('token').then((value)=>{
-          setToken(value)
-        })
-    }, [token]);
+    // React.useEffect(() => {
+    //     AsyncStorage.getItem('token').then((value)=>{
+    //       setToken(value)
+    //     })
+    // }, [token]);
 
     const pinSchema = Yup.object().shape({
         pin1: Yup.string().required('Required'),
@@ -53,6 +53,7 @@ export default function CreatePin({ navigation }){
             }, 2000);
         }
     }
+    
     return (
         <TailwindProvider>
             <View className={`bg-[#293462] w-full h-full`}>

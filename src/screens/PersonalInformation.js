@@ -3,11 +3,20 @@ import { View, Text, TextInput, TouchableOpacity, ImageBackground, ScrollView } 
 import React from 'react'
 import { TailwindProvider } from "tailwindcss-react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
-import default_profile from '../assets/images/default.jpg'
-import Menu from '../components/Menu';
-import Input from '../components/Input';
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDataById } from '../redux/asyncActions/users';
 
-export default function PersonalInformation({ navigation }){
+export default function PersonalInformation({ route, navigation }){
+    const dispatch = useDispatch();
+    const [dataUser, setData] = React.useState(route.params? route.params:{})
+    const token = useSelector((state) => state.auth.token)
+
+    React.useEffect(() => {
+        if(token){
+            dispatch(getUserDataById([token, (e)=>setData(e)]))
+        }
+    }, [token]);
+
     return (
         <TailwindProvider>
             <View className={`h-1/6 bg-gray-100`}>
@@ -24,21 +33,21 @@ export default function PersonalInformation({ navigation }){
                 <Text className={`text-[#8289AF] text-sm text-center`}>We got your personal information from the sign up proccess. If you want to make changes on your information, contact our support.</Text>
                 <View className={`w-full bg-[#DBDFFD] px-4 py-2 flex flex-col rounded-lg`}>
                     <Text className={`text-[#8289AF] text-sm`}>First Name</Text>
-                    <Text className={`text-[#293462] font-bold text-base`}>Robert</Text>
+                    <Text className={`text-[#293462] font-bold text-base`}>{dataUser.first_name}</Text>
                 </View>
                 <View className={`w-full bg-[#DBDFFD] px-4 py-2 flex flex-col rounded-lg`}>
                     <Text className={`text-[#8289AF] text-sm`}>Last Name</Text>
-                    <Text className={`text-[#293462] font-bold text-base`}>Chandler</Text>
+                    <Text className={`text-[#293462] font-bold text-base`}>{dataUser.last_name}</Text>
                 </View>
                 <View className={`w-full bg-[#DBDFFD] px-4 py-2 flex flex-col rounded-lg`}>
                     <Text className={`text-[#8289AF] text-sm`}>Verified E-mail</Text>
-                    <Text className={`text-[#293462] font-bold text-base`}>pewdiepie1@gmail.com</Text>
+                    <Text className={`text-[#293462] font-bold text-base`}>{dataUser.email}</Text>
                 </View>
                 <View className={`w-full bg-[#DBDFFD] px-4 py-2 flex flex-row items-center justify-between rounded-lg`}>
                     <View>
                         <Text className={`text-[#8289AF] text-sm`}>Phone Number</Text>
                         <TouchableOpacity onPress={() => navigation.navigate('PhoneAdd')}>
-                            <Text className={`text-[#293462] font-bold text-base`}>+62 813-9387-7946</Text>
+                            <Text className={`text-[#293462] font-bold text-base`}>{dataUser.phone_number == 0 ? '-':dataUser.phone_number}</Text>
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity onPress={() => navigation.navigate('PhoneManage')}>

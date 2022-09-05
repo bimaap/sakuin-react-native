@@ -58,11 +58,10 @@ export default function Login({ navigation }){
     }
 
     if (token) {
-      AsyncStorage.setItem('token', token)
-      dispatch(getUserPin([token, (pin)=>{
-        dispatch(clearAuth());
-        navigation.navigate(pin != 0 && pin !== null? 'Home':'CreateProfile')
-      }]));
+      // dispatch(getUserPin([token, (pin)=>{
+      //   dispatch(clearAuth());
+      //   navigation.navigate(pin != 0 && pin !== null? 'Home':'CreateProfile')
+      // }]));
 
       setTimeout(function () {
         setLoading(false)

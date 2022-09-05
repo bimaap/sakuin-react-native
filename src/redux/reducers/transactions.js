@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { postTransfer } from "../asyncActions/transactions";
+import { postTopup, postTransfer, getTransactions } from "../asyncActions/transactions";
 
 const initialState = {
   data: null,
@@ -15,12 +15,42 @@ const transactions = createSlice({
     
   },
   extraReducers: (build) => {
+    build.addCase(getTransactions.pending, (state) => {
+      state.data = null
+      state.message = null
+      state.error = null
+    });
+    build.addCase(getTransactions.fulfilled, (state, action) => {
+        const error = action.payload.error;
+        if (!error) {
+            state.message = action.payload.message;
+            state.data = action.payload.data;
+        } else {
+          state.error = action.payload.error;
+        }
+    });
+
     build.addCase(postTransfer.pending, (state) => {
+      state.data = null
+      state.message = null
+      state.error = null
+    });
+    build.addCase(postTransfer.fulfilled, (state, action) => {
+        const error = action.payload.error;
+        if (!error) {
+            state.message = action.payload.message;
+            state.data = action.payload.data;
+        } else {
+          state.error = action.payload.error;
+        }
+    });
+
+    build.addCase(postTopup.pending, (state) => {
         state.data = null
         state.message = null
         state.error = null
     });
-    build.addCase(postTransfer.fulfilled, (state, action) => {
+    build.addCase(postTopup.fulfilled, (state, action) => {
         const error = action.payload.error;
         if (!error) {
             state.message = action.payload.message;
@@ -32,5 +62,5 @@ const transactions = createSlice({
   }
 });
 
-export { postTransfer };
+export { getTransactions, postTransfer, postTopup };
 export default transactions.reducer;

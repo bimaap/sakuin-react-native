@@ -6,21 +6,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import default_profile from '../assets/images/default.jpg'
 import { useDispatch, useSelector } from "react-redux";
 import { getUsersData } from '../redux/asyncActions/users';
+import { getUserDataById } from '../redux/asyncActions/users';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Input from '../components/Input';
 
 export default function FindReceiver({ navigation }){
     const dispatch = useDispatch();
-    const [token, setToken] = React.useState();
+    const token = useSelector((state) => state.auth.token)
     const [data, setData] = React.useState([])
     const [pageInfo, setPageInfo] = React.useState({})
     const [loading, setLoading] = React.useState(false);
 
     React.useEffect(()=>{
-        AsyncStorage.getItem('token').then((value)=>{
-            setToken(value)
-        })
-
         if(token){
             dispatch(getUsersData([token, (e) => {
                 setData(e.results)

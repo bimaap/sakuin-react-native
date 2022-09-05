@@ -27,7 +27,6 @@ const auth = createSlice({
         state.message = null
         state.error = null
     });
-
     build.addCase(login.fulfilled, (state, action) => {
         const token = action.payload.token;
         if (token) {
@@ -42,7 +41,6 @@ const auth = createSlice({
         state.message = null
         state.error = null
     });
-
     build.addCase(register.fulfilled, (state, action) => {
         const error = action.payload.error;
         if (!error) {

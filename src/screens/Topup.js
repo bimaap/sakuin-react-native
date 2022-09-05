@@ -22,7 +22,7 @@ export default function Topup({ route, navigation }){
             </View>
             <View className={`bg-gray-100 w-full flex flex-col p-4`}>
                 <View className={`w-full bg-[#DBDFFD] p-2 space-x-2 flex flex-row rounded-lg`}>
-                    <TouchableOpacity onPress={() => navigation.navigate('TopupTransaction', {data: route.params.dataUser})}>
+                    <TouchableOpacity onPress={() => navigation.navigate('TopupTransaction')}>
                         <View className={`w-[48px] h-[48px] rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center`}>
                             <Icon name={'add-outline'} size={30} color={'#293462'} />
                         </View>

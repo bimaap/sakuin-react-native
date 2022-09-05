@@ -23,7 +23,7 @@ export default function TransferFailed({ navigation }){
                     </View>
                     <View className={`flex flex-col justify-center items-center space-y-4`}>
                         <Text className={`text-lg font-semibold text-gray-900`}>Transfer Failed</Text>
-                        <Text className={`text-[#8289AF] text-center text-sm`}>We can’t transfer your money at the moment, we recommend you to check your internet connection and try again.</Text>
+                        <Text className={`text-[#8289AF] text-center text-sm`}>We can’t transfer your money, because you entered the wrong pin.</Text>
                     </View>
                     
                     <View className={`flex flex-row items-center`}>

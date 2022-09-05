@@ -6,13 +6,25 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import default_profile from '../assets/images/default.jpg'
 import Menu from '../components/Menu';
 import { logout } from '../redux/reducers/auth';
+import { clearAuth } from '../redux/reducers/auth';
 import { useDispatch, useSelector } from "react-redux";
+import { getUserDataById } from '../redux/asyncActions/users';
 
-export default function Profile({ navigation }){
+export default function Profile({ route, navigation }){
     const dispatch = useDispatch();
+    const [dataUser, setData] = React.useState({})
+    const token = useSelector((state) => state.auth.token)
+
+    React.useEffect(() => {
+        if(token){
+            dispatch(getUserDataById([token, (e)=>setData(e)]))
+        }
+    }, [token, dispatch, getUserDataById]);
+
     const onLogout = () => {
+        dispatch(clearAuth());
         dispatch(logout());
-        navigation.navigate('Login')
+        // navigation.navigate('Login')
     };
     
     return (
@@ -30,14 +42,18 @@ export default function Profile({ navigation }){
             <View className={`bg-gray-100 w-full flex flex-col flex-1`}>
                 <View className={`w-full p-4 flex flex-col items-center justify-center space-y-4 flex-1`}>
                     <View className={`w-[70px] h-[70px] rounded-lg overflow-hidden`}>
-                        <ImageBackground source={default_profile} className={`w-[70px] h-[70px]`} />
+                        <ImageBackground source={dataUser.image? { uri: `https://res.cloudinary.com/sakuin/image/upload/v1661873432/sakuin/${dataUser.image}` } : default_profile} className={`w-[70px] h-[70px]`} />
                     </View>
-                    <View className={`flex flex-row items-center space-x-1`}>
-                        <Icon name={'create-outline'} size={18} color={'grey'} />
-                        <Text className={`text-gray-500 text-sm`}>Edit</Text>
-                    </View>
-                    <Text className={`text-gray-900 text-lg font-bold`}>Robert Chandler</Text>
-                    <Text className={`text-gray-500 text-sm`}>+62 813-9387-7946</Text>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
+                        <View className={`flex flex-row items-center space-x-1`}>
+                            <Icon name={'create-outline'} size={18} color={'grey'} />
+                            <Text className={`text-gray-500 text-sm`}>Edit</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <Text className={`text-gray-900 text-lg font-bold`}>{dataUser?.first_name} {dataUser?.last_name}</Text>
+                    <Text className={`text-gray-500 text-sm`}>{dataUser?.phone_number == 0? '-':dataUser.phone_number}</Text>
 
                     <TouchableOpacity className={`w-full`} onPress={() => navigation.navigate('PersonalInformation')}>
                         <View className={`w-full bg-gray-300 h-[48px] rounded flex items-center justify-between flex-row px-4`}>

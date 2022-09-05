@@ -13,18 +13,15 @@ import * as Yup from 'yup';
 
 export default function CreateProfile({navigation}){
   const [image, setImage] = React.useState(null);
-  const [token, setToken] = React.useState();
+  const token = useSelector((state) => state.auth.token)
   const [loading, setLoading] = React.useState(false);
   const [checkError, setCheckError] = React.useState(null)
   const dispatch = useDispatch();
   const message = useSelector((state) => state.users.message)
 
   React.useEffect(() => {
-    AsyncStorage.getItem('token').then((value)=>{
-      setToken(value)
-    })
     message && setCheckError(message)
-  }, [token, message]);
+  }, [message]);
 
   const openGalery = async () => {
     setCheckError(null)
