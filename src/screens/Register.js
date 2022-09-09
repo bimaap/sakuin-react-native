@@ -7,6 +7,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../redux/asyncActions/auth";
+import { clearAuth } from '../redux/reducers/auth';
 
 export default function Register({navigation}){
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function Register({navigation}){
         setLoading(true)
         setTimeout(function () {
           setLoading(false)
-          navigation.navigate('RegisterSuccess')
+            navigation.navigate('RegisterSuccess')
         }, 1000);
       }
     }else{

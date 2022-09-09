@@ -26,6 +26,20 @@ export default function FindReceiver({ navigation }){
         }
     }, [token])
 
+    const onSearch = (value) =>{
+        dispatch(getUsersData([token, (e) => {
+            setData(e.results)
+            setPageInfo(e.pageInfo)
+        }, 1, value]))
+    }
+
+    const onFilter = (filter => {
+        dispatch(getUsersData([token, (e) => {
+            setData(e.results)
+            setPageInfo(e.pageInfo)
+        }, 1, '', '', filter]))
+    })
+
     const scrollData = (e) => {
         let layoutHeight = e.nativeEvent.layoutMeasurement.height;
         let contentHeight = e.nativeEvent.contentSize.height;
@@ -60,6 +74,7 @@ export default function FindReceiver({ navigation }){
                 icon={['search-outline']}
                 placeholder={'Search receiver here'}
                 type={'default'}
+                onChange={(text)=>{onSearch(text)}}
                 />
             </View>
             <View className={`flex flex-raw px-4 pb-2`}>
@@ -110,12 +125,12 @@ export default function FindReceiver({ navigation }){
             </ScrollView>
             <View className={`p-4 bg-gray-100 flex flex-row`}>
                 <View className={`flex flex-row space-x-5`}>
-                    <TouchableOpacity className={`w-[48px]`}>
+                    <TouchableOpacity className={`w-[48px]`} onPress={()=> onFilter('asc')}>
                         <View className={`w-full bg-gray-300 h-[48px] rounded flex items-center justify-center`}>
                             <Icon name={'arrow-up'} size={24} color={'#293462'} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity className={`w-[48px]`}>
+                    <TouchableOpacity className={`w-[48px]`} onPress={()=> onFilter('desc')}>
                         <View className={`w-full bg-gray-300 h-[48px] rounded flex items-center justify-center`}>
                             <Icon name={'arrow-down'} size={24} color={'#293462'} />
                         </View>

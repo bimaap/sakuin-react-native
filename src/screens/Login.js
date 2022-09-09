@@ -50,6 +50,7 @@ export default function Login({ navigation }){
   }
 
   React.useEffect(() => {
+    dispatch(clearAuth())
     if(error){
       setCheckError(error)
       setTimeout(function () {

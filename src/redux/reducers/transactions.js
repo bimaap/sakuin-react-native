@@ -1,6 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
-import { postTopup, postTransfer, getTransactions } from "../asyncActions/transactions";
+import { postTopup, postTransfer, getTransactions, getTransactionById } from "../asyncActions/transactions";
 
 const initialState = {
   data: null,
@@ -15,6 +15,21 @@ const transactions = createSlice({
     
   },
   extraReducers: (build) => {
+    build.addCase(getTransactionById.pending, (state) => {
+      state.data = null
+      state.message = null
+      state.error = null
+    });
+    build.addCase(getTransactionById.fulfilled, (state, action) => {
+        const error = action.payload.error;
+        if (!error) {
+            state.message = action.payload.message;
+            state.data = action.payload.data;
+        } else {
+          state.error = action.payload.error;
+        }
+    });
+
     build.addCase(getTransactions.pending, (state) => {
       state.data = null
       state.message = null
@@ -62,5 +77,5 @@ const transactions = createSlice({
   }
 });
 
-export { getTransactions, postTransfer, postTopup };
+export { getTransactions, postTransfer, postTopup, getTransactionById };
 export default transactions.reducer;

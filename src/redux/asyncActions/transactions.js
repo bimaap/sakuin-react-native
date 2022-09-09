@@ -17,6 +17,20 @@ export const getTransactions = createAsyncThunk("get/transactions", async ([toke
   }
 });
 
+export const getTransactionById = createAsyncThunk("get/transactionById", async ([token, id, cb]) => {
+  const result = {};
+  try {
+    const { data } = await http(token).get(`https://sakuin-backend.vercel.app/transactions/${id}`)
+    result.message = data.message;
+    result.data = data.results;
+    cb(data)
+    return result;
+  } catch (e) {
+    result.error = e.response.data.message;
+    return result;
+  }
+});
+
 export const postTopup = createAsyncThunk("post/topup", async ([token, amount]) => {
   const result = {};
   try {

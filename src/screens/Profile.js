@@ -9,6 +9,7 @@ import { logout } from '../redux/reducers/auth';
 import { clearAuth } from '../redux/reducers/auth';
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDataById } from '../redux/asyncActions/users';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Profile({ route, navigation }){
     const dispatch = useDispatch();
@@ -20,6 +21,12 @@ export default function Profile({ route, navigation }){
             dispatch(getUserDataById([token, (e)=>setData(e)]))
         }
     }, [token, dispatch, getUserDataById]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            dispatch(getUserDataById([token, (e)=>setData(e)]))
+        }, []),
+    );
 
     const onLogout = () => {
         dispatch(clearAuth());

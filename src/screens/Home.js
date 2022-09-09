@@ -35,6 +35,8 @@ export default function Home({ route, navigation }){
         route.params && setData(route.params)
     }, [token, route.params]);
 
+    // console.log(dataTransactions.length == 0? 0:1);
+
     return (
         <TailwindProvider>
             <View className={`h-1/6 bg-gray-100`}>
@@ -80,6 +82,13 @@ export default function Home({ route, navigation }){
                         </TouchableOpacity>
                     </View>
                     
+                    {
+                        dataTransactions?.length == 0? 
+                        <View className={`w-full h-[48px] flex items-center justify-center`}>
+                            <Text className={`text-sm font-normal text-gray-400`}>No history transactions</Text>
+                        </View>:<></>
+                    }
+
                     {
                         dataTransactions.map((e, index) => {
                             let full_name = `${dataUser.first_name} ${dataUser.last_name}`

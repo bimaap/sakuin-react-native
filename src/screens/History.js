@@ -64,18 +64,25 @@ export default function History({ navigation }){
                         dataTransactions.map((e, index) => {
                             let full_name = `${dataUser.first_name} ${dataUser.last_name}`
                             return (
-                                <View key={index} className={`w-full bg-[#DBDFFD] p-2 flex flex-row justify-between items-center rounded-lg`}>
-                                    <View className={`flex flex-row space-x-3`}>
-                                        <View className={`w-[48px] h-[48px] rounded-lg overflow-hidden`}>
-                                            <ImageBackground source={e.receiver_id == 'mitra_topup'? midtrans_profile: e.receiver_image? { uri: `https://res.cloudinary.com/sakuin/image/upload/v1661873432/sakuin/${full_name == e.receiver_name? e.sender_image:e.receiver_image}` } : default_profile} className={`w-[48px] h-[48px]`} />
+                                <View key={index.toString()} >
+                                    <TouchableOpacity onPress={() => navigation.navigate('TransactionDetail', {id: e.id})} >
+                                        <View key={index} className={`w-full bg-[#DBDFFD] p-2 flex flex-row justify-between items-center rounded-lg`}>
+                                            <View key={index} className={`w-full bg-[#DBDFFD] p-2 flex flex-row justify-between items-center rounded-lg`}>
+                                                <View className={`flex flex-row space-x-3`}>
+                                                    <View className={`w-[48px] h-[48px] rounded-lg overflow-hidden`}>
+                                                        <ImageBackground source={e.receiver_id == 'mitra_topup'? midtrans_profile: e.receiver_image? { uri: `https://res.cloudinary.com/sakuin/image/upload/v1661873432/sakuin/${full_name == e.receiver_name? e.sender_image:e.receiver_image}` } : default_profile} className={`w-[48px] h-[48px]`} />
+                                                    </View>
+                                                    <View>
+                                                        <Text className={`text-[#293462] font-bold text-base`}>{e.receiver_id == 'mitra_topup'? 'Midtrans':full_name == e.receiver_name? e.sender_name:e.receiver_name}</Text>
+                                                        <Text className={`text-[#8289AF] font-bold text-sm`}>{full_name == e.receiver_name? 'Earn':e.type} ({e.status})</Text>
+                                                    </View>
+                                                </View>
+                                                <Text className={`${full_name == e.receiver_name? 'text-green-500':e.type == 'Topup'? 'text-blue-500':'text-red-500'} font-bold text-sm`}>{full_name == e.receiver_name? '+':e.type == 'Topup'? '+':'-'}Rp{e.amount}</Text>
+                                            </View>
                                         </View>
-                                        <View>
-                                            <Text className={`text-[#293462] font-bold text-base`}>{e.receiver_id == 'mitra_topup'? 'Midtrans':full_name == e.receiver_name? e.sender_name:e.receiver_name}</Text>
-                                            <Text className={`text-[#8289AF] font-bold text-sm`}>{full_name == e.receiver_name? 'Earn':e.type} ({e.status})</Text>
-                                        </View>
-                                    </View>
-                                    <Text className={`${full_name == e.receiver_name? 'text-green-500':e.type == 'Topup'? 'text-blue-500':'text-red-500'} font-bold text-sm`}>{full_name == e.receiver_name? '+':e.type == 'Topup'? '+':'-'}Rp{e.amount}</Text>
+                                    </TouchableOpacity>
                                 </View>
+                                
                             )
                         }
                     )}

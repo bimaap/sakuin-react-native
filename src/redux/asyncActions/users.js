@@ -2,10 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import qs from "qs";
 import http from "../../helpers/http";
 
-export const getUsersData = createAsyncThunk("getAll/users", async ([token, cb, page = 1, search = '', limit = 10]) => {
+export const getUsersData = createAsyncThunk("getAll/users", async ([token, cb, page = 1, search = '', limit = 10, filter = 'asc']) => {
   const result = {};
   try {
-    const { data } = await http(token).get(`https://sakuin-backend.vercel.app/users?page=${page}&limit=${limit}&search=${search}`);
+    const { data } = await http(token).get(`https://sakuin-backend.vercel.app/users?page=${page}&limit=${limit}&search=${search}&filter=${filter}`);
 
     result.message = data.message;
     result.data = data.results;
@@ -68,7 +68,6 @@ export const patchUserImage = createAsyncThunk("patchUserImage/users", async ([t
     
     try {
         const imageData = new FormData();
-        
         imageData.append("image", {
           uri: image[0].uri,
           name: image[0].fileName,

@@ -20,6 +20,7 @@ import TransferConfirm from './TransferConfirm';
 import TransferPin from './TransferPin';
 import TransferSuccess from './TransferSuccess';
 import TransferFailed from './TransferFailed';
+import TransactionDetail from './TransactionDetail';
 import Topup from './Topup';
 import TopupTransaction from './TopupTransaction';
 import Profile from './Profile';
@@ -54,6 +55,7 @@ const Main = () => {
             <Stack.Screen options={{headerShown: false}} name="Topup" component={Topup} />
             <Stack.Screen options={{headerShown: false}} name="TopupTransaction" component={TopupTransaction} />
             <Stack.Screen options={{headerShown: false}} name="TopupSuccess" component={TopupSuccess} />
+            <Stack.Screen options={{headerShown: false}} name="TransactionDetail" component={TransactionDetail} />
 
             <Stack.Screen options={{headerShown: false}} name="Profile" component={Profile} />
             <Stack.Screen options={{headerShown: false}} name="PersonalInformation" component={PersonalInformation} />
