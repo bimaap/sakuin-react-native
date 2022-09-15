@@ -105,3 +105,21 @@ export const patchUserFullname = createAsyncThunk("patchUserFullname/users", asy
         return result;
     }
 });
+
+export const patchUserPhone = createAsyncThunk("patchUserProfile/users", async ([token, phone_number]) => {
+    const result = {};
+    try {
+        const send = qs.stringify({phone_number});
+        const { data } = await http(token).patch("https://sakuin-backend.vercel.app/users/patch/phone", send, {
+            headers: {
+                "content-type": "application/x-www-form-urlencoded"
+            }
+        });
+        console.log(send);
+        result.message = data.message;
+        return result;
+    } catch (e) {
+        result.error = e.response.data.message;
+        return result;
+    }
+});

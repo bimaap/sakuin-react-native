@@ -5,11 +5,18 @@ import { TailwindProvider } from "tailwindcss-react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDataById } from '../redux/asyncActions/users';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function PersonalInformation({ route, navigation }){
     const dispatch = useDispatch();
     const [dataUser, setData] = React.useState(route.params? route.params:{})
     const token = useSelector((state) => state.auth.token)
+
+    useFocusEffect(
+        React.useCallback(() => {
+            dispatch(getUserDataById([token, (e)=>setData(e)]))
+        }, []),
+    );
 
     React.useEffect(() => {
         if(token){
